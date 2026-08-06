@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { useStore } from "@/context/StoreContext";
 import { useAsync } from "@/hooks/useAsync";
-import { listLooks } from "@/services/looks";
+import { listLooks, listLookProducts } from "@/services/looks";
+import { listProductImages } from "@/services/products";
 import { getFileUrl } from "@/lib/storage";
+import type { Look } from "@/types/domain";
 
 export function LooksAdminPage() {
   const store = useStore();
@@ -32,20 +34,43 @@ export function LooksAdminPage() {
       {state.status === "success" && state.data.length > 0 && (
         <div className="grid sm:grid-cols-2 gap-4">
           {state.data.map((look) => (
-            <div key={look.$id} className="rounded-xl border border-line bg-white/60 overflow-hidden">
-              <div className="aspect-video bg-blush-50">
-                {look.coverImageUrl && (
-                  <img src={getFileUrl(look.coverImageUrl)} alt="" className="w-full h-full object-cover" />
-                )}
-              </div>
-              <div className="p-4">
-                <p className="font-medium">{look.name}</p>
-                {look.description && <p className="text-sm text-ink-soft mt-1">{look.description}</p>}
-              </div>
-            </div>
+            <AdminLookCard key={look.$id} look={look} />
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function AdminLookCard({ look }: { look: Look }) {
+  // Se não houver capa definida, usa a foto do primeiro produto do look —
+  // mesma lógica usada no site público (LookCard), pra não precisar de
+  // upload manual de capa.
+  const fallbackState = useAsync(async () => {
+    if (look.coverImageUrl) return null;
+    const products = await listLookProducts(look.$id);
+    if (products.length === 0) return null;
+    const images = await listProductImages(products[0].$id);
+    return images[0]?.url ?? null;
+  }, [look.$id, look.coverImageUrl]);
+
+  const imageId = look.coverImageUrl ?? (fallbackState.status === "success" ? fallbackState.data : null);
+
+  return (
+    <div className="rounded-xl border border-line bg-white/60 overflow-hidden">
+      <div className="aspect-video bg-blush-50">
+        {imageId ? (
+          <img src={getFileUrl(imageId)} alt={look.name} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-xs text-ink-soft/60">
+            Sem foto ainda
+          </div>
+        )}
+      </div>
+      <div className="p-4">
+        <p className="font-medium">{look.name}</p>
+        {look.description && <p className="text-sm text-ink-soft mt-1">{look.description}</p>}
+      </div>
     </div>
   );
 }
