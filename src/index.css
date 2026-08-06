@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* =====================================================================
+   DESIGN TOKENS — Boutique SaaS
+   Paleta: cream quente + rosa boutique + dourado premium.
+   Tipografia: Fraunces (display, com contraste elegante) +
+   Manrope (corpo, moderna e acolhedora) + Parisienne (script, uso raro,
+   só para o logotipo e pequenos toques assinados).
+   ===================================================================== */
+@theme {
+  /* Cor base */
+  --color-cream: #fbf3ec;
+  --color-cream-deep: #f3e6dc;
+
+  /* Rosa — identidade principal */
+  --color-blush-50: #fdf1f1;
+  --color-blush-100: #f8dfe1;
+  --color-blush-200: #f0c3c9;
+  --color-rose-400: #e08ba0;
+  --color-rose-500: #d46a82;
+  --color-rose-600: #bf4f6a;
+  --color-rose-700: #9c3a54;
+  --color-rose-900: #5c2233;
+
+  /* Dourado — acentos premium */
+  --color-gold-300: #ddc088;
+  --color-gold-500: #b98a46;
+  --color-gold-700: #8f692f;
+
+  /* Neutros quentes (nunca preto puro) */
+  --color-ink: #3a2e2a;
+  --color-ink-soft: #6b5b54;
+  --color-line: #e8d9cd;
+
+  /* Feedback */
+  --color-success: #4c7a5e;
+  --color-danger: #b3503f;
+
+  /* Tipografia */
+  --font-display: "Fraunces", "Iowan Old Style", serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+  --font-script: "Parisienne", cursive;
+
+  /* Raios — evocam maciez de tecido, nunca cortante */
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+
+  /* Sombras suaves, tingidas de rosa em vez de cinza puro */
+  --shadow-soft: 0 4px 24px -4px rgba(92, 34, 51, 0.12);
+  --shadow-lifted: 0 12px 40px -8px rgba(92, 34, 51, 0.18);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-rose-900);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-blush-200);
+    color: var(--color-rose-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rose-500);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .label-caps {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .font-script {
+    font-family: var(--font-script);
+  }
+
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-gold-300) 20%,
+      var(--color-gold-300) 80%,
+      transparent
+    );
+  }
+
+  /* Campo de formulário padrão — usado em todo o painel Minha Loja */
+  .input-field {
+    width: 100%;
+    border-radius: 0.625rem;
+    border: 1px solid var(--color-line);
+    padding: 0.55rem 0.75rem;
+    font-size: 0.875rem;
+    background-color: var(--color-cream);
+  }
+  .input-field:focus {
+    outline: none;
+    border-color: var(--color-rose-400);
+  }
+}
