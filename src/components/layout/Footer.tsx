@@ -6,12 +6,12 @@ import type { Store } from "@/types/domain";
 const DEVELOPER_WHATSAPP = "5579998061093";
 const DEVELOPER_MESSAGE = "Olá Jardel! Vi o site que você desenvolveu e queria conversar sobre um projeto.";
 
-export function Footer({ store }: { store: Pick<Store, "name" | "whatsapp" | "instagram" | "address" | "city" | "businessHours" | "logoUrl"> }) {
+export function Footer({ store }: { store: Pick<Store, "name" | "whatsapp" | "instagram" | "address" | "city" | "businessHours" | "logoUrl" | "$updatedAt"> }) {
   return (
     <footer className="bg-cream-deep border-t border-line mt-24">
       <div className="mx-auto w-full max-w-7xl px-5 md:px-8 py-14 grid grid-cols-2 md:grid-cols-4 gap-10">
         <div className="col-span-2 md:col-span-1 space-y-3">
-          <Logo storeName={store.name} logoUrl={store.logoUrl} />
+          <Logo storeName={store.name} logoUrl={store.logoUrl} version={store.$updatedAt} />
           <p className="text-sm text-ink-soft max-w-xs">
             Peças selecionadas com amor para vestir sua princesa em todos os momentos especiais.
           </p>

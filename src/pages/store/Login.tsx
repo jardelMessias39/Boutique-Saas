@@ -43,7 +43,7 @@ export function LoginPage() {
       <Container className="max-w-sm">
         <div className="text-center mb-8">
           <div className="inline-block">
-            <Logo storeName={store.name} logoUrl={store.logoUrl} />
+            <Logo storeName={store.name} logoUrl={store.logoUrl} version={store.$updatedAt} />
           </div>
         </div>
 

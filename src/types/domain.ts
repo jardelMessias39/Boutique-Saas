@@ -4,6 +4,7 @@ export type ReviewStatus = "pendente" | "aprovada" | "rejeitada";
 
 export interface Store {
   $id: string;
+  $updatedAt: string;
   ownerId: string;
   name: string;
   slug: string;

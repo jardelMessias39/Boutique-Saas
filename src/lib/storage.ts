@@ -6,8 +6,16 @@ import { storage, APPWRITE_BUCKET_ID, Permission, Role } from "@/lib/appwrite";
  * organização por tipo é feita pelo prefixo do nome do arquivo (ver
  * convenção em UPLOAD_PREFIXES abaixo), não por bucket separado.
  */
-export function getFileUrl(fileId: string) {
-  return storage.getFileView({ bucketId: APPWRITE_BUCKET_ID, fileId });
+/**
+ * Monta a URL pública de visualização de um arquivo. O parâmetro
+ * `version` é opcional e serve só pra "forçar" o navegador a buscar a
+ * imagem de novo em vez de usar uma versão em cache — necessário pra
+ * logo/banner, que sempre reusam o mesmo nome de arquivo (fileId fixo),
+ * então a URL nunca mudaria sozinha mesmo trocando a foto.
+ */
+export function getFileUrl(fileId: string, version?: string | number) {
+  const url = storage.getFileView({ bucketId: APPWRITE_BUCKET_ID, fileId });
+  return version ? `${url}&v=${encodeURIComponent(String(version))}` : url;
 }
 
 export const UPLOAD_PREFIXES = {

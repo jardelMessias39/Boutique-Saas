@@ -51,7 +51,7 @@ export function Header({ storeName, whatsapp, logoUrl }: HeaderProps) {
     <header className="sticky top-0 z-40 bg-cream/90 backdrop-blur border-b border-line">
       <Container className="flex items-center justify-between py-3 gap-4">
         <Link to="/" aria-label="Ir para a página inicial" className="shrink-0">
-          <Logo storeName={storeName} logoUrl={logoUrl} />
+          <Logo storeName={storeName} logoUrl={logoUrl} version={store.$updatedAt} />
         </Link>
 
         <nav className="hidden xl:flex items-center gap-5" aria-label="Navegação principal">

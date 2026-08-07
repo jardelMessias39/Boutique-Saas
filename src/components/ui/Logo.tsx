@@ -1,10 +1,18 @@
 import { getFileUrl } from "@/lib/storage";
 
-export function Logo({ storeName, logoUrl }: { storeName: string; logoUrl?: string }) {
+export function Logo({
+  storeName,
+  logoUrl,
+  version,
+}: {
+  storeName: string;
+  logoUrl?: string;
+  version?: string | number;
+}) {
   if (logoUrl) {
     return (
       <div className="flex items-center gap-2 select-none">
-        <img src={getFileUrl(logoUrl)} alt={storeName} className="h-10 w-10 rounded-full object-cover" />
+        <img src={getFileUrl(logoUrl, version)} alt={storeName} className="h-10 w-10 rounded-full object-cover" />
         <div className="flex flex-col leading-none">
           <span className="font-script text-2xl md:text-3xl text-rose-700 whitespace-nowrap">{storeName}</span>
           <span className="label-caps text-ink-soft whitespace-nowrap">Boutique Infantil</span>

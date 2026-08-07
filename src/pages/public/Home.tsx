@@ -23,7 +23,7 @@ export function Home() {
 
   return (
     <>
-      <HeroSection storeName={store.name} whatsapp={store.whatsapp} bannerUrl={store.bannerUrl} />
+      <HeroSection storeName={store.name} whatsapp={store.whatsapp} bannerUrl={store.bannerUrl} bannerVersion={store.$updatedAt} />
       <TrustBadgesRow />
       <NoveltiesSection storeId={store.$id} />
     </>
@@ -34,10 +34,12 @@ function HeroSection({
   storeName,
   whatsapp,
   bannerUrl,
+  bannerVersion,
 }: {
   storeName: string;
   whatsapp?: string;
   bannerUrl?: string;
+  bannerVersion?: string;
 }) {
   return (
     <section className="relative overflow-hidden">
@@ -91,7 +93,7 @@ function HeroSection({
         >
           <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-blush-100 via-blush-50 to-cream-deep border border-line shadow-[var(--shadow-lifted)]">
             {bannerUrl ? (
-              <img src={getFileUrl(bannerUrl)} alt={storeName} className="w-full h-full object-cover" />
+              <img src={getFileUrl(bannerUrl, bannerVersion)} alt={storeName} className="w-full h-full object-cover" />
             ) : (
               <>
                 <RibbonPattern className="absolute inset-0 w-full h-full opacity-[0.14] text-rose-400" />

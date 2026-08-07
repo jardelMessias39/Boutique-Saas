@@ -16,6 +16,7 @@ export function BannerPage() {
   const [bannerUrl, setBannerUrl] = useState(store.bannerUrl);
   const [saving, setSaving] = useState<"logo" | "banner" | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [version, setVersion] = useState(() => Date.now());
 
   async function handleUpload(kind: "logo" | "banner") {
     if (!user) return;
@@ -32,6 +33,7 @@ export function BannerPage() {
       await updateStore(store.$id, kind === "logo" ? { logoUrl: fileId } : { bannerUrl: fileId });
       if (kind === "logo") setLogoUrl(fileId);
       else setBannerUrl(fileId);
+      setVersion(Date.now());
       await refreshStore();
     } catch (err) {
       setError(
@@ -52,7 +54,7 @@ export function BannerPage() {
         <h2 className="font-medium mb-2">Logo da loja</h2>
         <p className="text-sm text-ink-soft mb-3">Aparece no cabeçalho e no rodapé do site.</p>
         {logoUrl && (
-          <img src={getFileUrl(logoUrl)} alt="Logo atual" className="w-20 h-20 object-cover rounded-lg border border-line mb-3" />
+          <img src={getFileUrl(logoUrl, version)} alt="Logo atual" className="w-20 h-20 object-cover rounded-lg border border-line mb-3" />
         )}
         <div className="flex gap-2">
           <input type="file" accept="image/*" onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)} className="input-field" />
@@ -66,7 +68,7 @@ export function BannerPage() {
         <h2 className="font-medium mb-2">Banner (foto principal da Home)</h2>
         <p className="text-sm text-ink-soft mb-3">Ideal em formato retrato, mostrando uma peça ou modelo vestindo.</p>
         {bannerUrl && (
-          <img src={getFileUrl(bannerUrl)} alt="Banner atual" className="w-full max-w-xs aspect-[4/5] object-cover rounded-lg border border-line mb-3" />
+          <img src={getFileUrl(bannerUrl, version)} alt="Banner atual" className="w-full max-w-xs aspect-[4/5] object-cover rounded-lg border border-line mb-3" />
         )}
         <div className="flex gap-2">
           <input type="file" accept="image/*" onChange={(e) => setBannerFile(e.target.files?.[0] ?? null)} className="input-field" />
